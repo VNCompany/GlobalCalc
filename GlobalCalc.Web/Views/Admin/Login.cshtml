@@ -1,0 +1,58 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Вход</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-size: 16pt;
+        }
+        .wrapper {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 30px;
+            border: 1px solid black;
+        }
+        .input-wrapper {
+            margin: 8px;
+        }
+        .flex-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        input[type=text], input[type=password] { width: 100%; }
+        input[type=submit] { padding: 3px 0; width: 130px }
+    </style>
+</head>
+<body>
+<div class="wrapper">
+    <h2 style="text-align: center; font-size: 20pt">Вход в панель управления:</h2>
+    <form method="post">
+        <div class="input-wrapper">
+            <label for="form-login">Логин:</label>
+            <input type="text" name="login" id="form-login" required>
+        </div>
+        <div class="input-wrapper">
+            <label for="form-password">Пароль:</label>
+            <input type="password" name="password" id="form-password" required>
+        </div>
+        <div class="input-wrapper flex-wrapper">
+            <input type="submit" value="Войти">
+        </div>
+            @if (ViewData["Login"] != null)
+            {
+                <div class="input-wrapper">
+                    <p style="text-align: center; font-size: 14pt; color: red">Неверный логин или пароль</p>
+                </div>
+            }
+        </form>
+</div>
+</body>
+</html>

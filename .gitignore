@@ -1,0 +1,13 @@
+.vs/
+.idea/
+[Bb]in/
+[Dd]ebug/
+[Rr]elease/
+[Oo]bj/
+[Pp]ackages/
+
+/GlobalCalc.Web/wwwroot/
+
+*.user
+*.sqlite
+*.suo

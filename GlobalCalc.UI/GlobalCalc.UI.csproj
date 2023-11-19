@@ -1,0 +1,28 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>WinExe</OutputType>
+        <TargetFramework>net6.0-windows</TargetFramework>
+        <Nullable>enable</Nullable>
+        <UseWPF>true</UseWPF>
+        <ApplicationIcon>Resources\GlobalCalc.ico</ApplicationIcon>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\GlobalCalc.Client\GlobalCalc.Client.csproj" />
+      <ProjectReference Include="..\GlobalCalc.Models\GlobalCalc.Models.csproj" />
+      <ProjectReference Include="..\GlobalCalc.Operations\GlobalCalc.Operations.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.75" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="Resources\GlobalCalc16.ico" />
+      <Resource Include="Resources\GlobalCalc16.ico" />
+      <None Remove="Resources\GlobalCalc.ico" />
+      <Resource Include="Resources\GlobalCalc.ico" />
+    </ItemGroup>
+
+</Project>

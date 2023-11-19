@@ -1,0 +1,49 @@
+﻿<Window x:Class="GlobalCalc.UI.Views.Profiles"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+        xmlns:conv="clr-namespace:GlobalCalc.UI.Converters"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
+        xmlns:vm="clr-namespace:GlobalCalc.UI.ViewModels"
+        mc:Ignorable="d"
+        Title="Выбор профиля"
+        ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowStyle="ToolWindow"
+        Height="350" Width="550">
+
+    <Window.DataContext>
+        <vm:ProfilesViewModel></vm:ProfilesViewModel>
+    </Window.DataContext>
+
+    <Window.Resources>
+        <conv:ProfileImageSourceConverter x:Key="ProfileImageSourceConverter" />
+        <sys:Boolean x:Key="BooleanFalse">False</sys:Boolean>
+    </Window.Resources>
+
+    <ListBox ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+             SelectionMode="Single"
+             ItemsSource="{Binding Profiles}"
+             SelectedItem="{Binding SelectedProfile}">
+        <i:Interaction.Triggers>
+            <i:EventTrigger EventName="MouseDoubleClick">
+                <i:InvokeCommandAction Command="{Binding SelectProfile}" />
+            </i:EventTrigger>
+        </i:Interaction.Triggers>
+        
+        <ListBox.ItemsPanel>
+            <ItemsPanelTemplate>
+                <WrapPanel IsItemsHost="True" />
+            </ItemsPanelTemplate>
+        </ListBox.ItemsPanel>
+
+        <ListBox.ItemTemplate>
+            <DataTemplate>
+                <Image Width="161" 
+                       Source="{Binding 
+                    Converter={StaticResource ProfileImageSourceConverter}, 
+                    ConverterParameter={StaticResource BooleanFalse}}" />
+            </DataTemplate>
+        </ListBox.ItemTemplate>
+    </ListBox>
+</Window>
