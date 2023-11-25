@@ -1,45 +1,44 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-using GlobalCalc.Web.Infrastructure;
+using GlobalCalc.Web.Services;
 
 namespace GlobalCalc.Web.Controllers;
 
-public class AdminController : AuthController
+public class AdminController : Controller
 {
     private readonly IConfiguration _config;
-    public AdminController(IConfiguration config)
+    private readonly AuthorizationService _auth;
+
+    public AdminController(IConfiguration config, AuthorizationService auth)
     {
         _config = config;
+        _auth = auth;
     }
 
-    [Authorize]
     public IActionResult Index()
     {
+        if (!_auth.Authenticate(Request.Cookies)) return OnAuthenticateFailed();
+
         return Ok("Main page");
     }
 
+    public string Hi() => "Hello world!";
+
     public IActionResult Login(string? login, string? password)
     {
+        if (_auth.Authenticate(Request.Cookies)) return RedirectToAction(nameof(Index));
+
         if (login == null || password == null)
             return View();
 
-        string expectedHash = _config["Authentication:AdminToken"];
-        string hash = HashTools.GenerateToken(login, password);
-        if (expectedHash != hash)
+        if (!_auth.Login(login, password, Response.Cookies))
         {
             ViewData["Login"] = false;
-        }
-        else
-        {
-            Response.Cookies.Append("access_token", hash, new CookieOptions { Expires = DateTime.UtcNow.AddDays(1) });
-            return RedirectToAction(nameof(Index));
+            return View();
         }
 
-        return View();
+        return RedirectToAction(nameof(Index));
     }
 
-    protected override IActionResult OnAuthenticateFailed()
-    {
-        return RedirectToAction(nameof(Login));
-    }
+    protected IActionResult OnAuthenticateFailed() => RedirectToAction(nameof(Login));
 }

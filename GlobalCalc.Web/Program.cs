@@ -13,6 +13,7 @@ namespace GlobalCalc.Web
                 {
                     jsonOptions.JsonSerializerOptions.Converters.Add(new Converters.JsonDateTimeConverter());
                 });
+            builder.Services.AddTransient<Services.AuthorizationService>();
             builder.Services.AddScoped<DataContext>();
 
             var app = builder.Build();
