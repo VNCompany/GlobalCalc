@@ -1,4 +1,5 @@
-﻿using System.Text.Json;
+﻿using System.Net.Http.Json;
+using System.Text.Json;
 
 using GlobalCalc.Models;
 
@@ -13,30 +14,22 @@ public class ApiClient : IApiClient
         _host = new Uri(host, UriKind.Absolute);
     }
 
-    public FacadeData GetData()
-    {
-        using HttpClient client = new HttpClient();
-        string content = client.GetAsync(new Uri(_host, "api/getData"))
-            .Result.Content.ReadAsStringAsync().Result;
-        return JsonSerializer.Deserialize<FacadeData>(content, 
-            new JsonSerializerOptions { PropertyNameCaseInsensitive = true })!;
-    }
+    public FacadeData GetData() => GetApiDataAsync<FacadeData>("getData").Result!;
 
-    public Dictionary<string, DateTime> GetImages()
-    {
-        using HttpClient client = new HttpClient();
-        string content = client.GetAsync(new Uri(_host, "api/getImages"))
-            .Result.Content.ReadAsStringAsync().Result;
-        var deserialized = JsonSerializer.Deserialize<IEnumerable<KeyValuePair<string, DateTime>>>(
-            content,
-            new JsonSerializerOptions { PropertyNameCaseInsensitive = true })!;
-        return new Dictionary<string, DateTime>(deserialized);
-    }
+    public List<RemoteImageFile> GetImages()
+        => GetApiDataAsync<List<RemoteImageFile>>("getImages").Result!;
 
     public Stream GetImage(string file)
     {
         using HttpClient client = new HttpClient();
         return client.GetAsync(new Uri(_host, string.Concat("content/", file)))
             .Result.Content.ReadAsStream();
+    }
+
+    private async Task<T?> GetApiDataAsync<T>(string endpoint)
+    {
+        using HttpClient client = new HttpClient();
+        return await client.GetFromJsonAsync<T>(new Uri(_host, $"api/{endpoint}")
+            , new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
     }
 }

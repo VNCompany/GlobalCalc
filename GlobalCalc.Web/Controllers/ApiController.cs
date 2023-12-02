@@ -38,15 +38,9 @@ public class ApiController : Controller
     }
 
     [HttpGet("getImages")]
-    public IEnumerable<KeyValuePair<string, DateTime>> GetImages()
+    public IEnumerable<RemoteImageFile> GetImages()
     {
         var dirInfo = new DirectoryInfo("wwwroot/content/");
-        return dirInfo.GetFiles().Select(f => new KeyValuePair<string, DateTime>(f.Name, f.LastWriteTime));
-    }
-
-    [HttpGet("getTest")]
-    public string GetTest([FromServices]IConfiguration config)
-    {
-        return config["Authentication:AdminPassword"];
+        return dirInfo.GetFiles().Select(f => new RemoteImageFile(f.Name, f.LastWriteTime));
     }
 }

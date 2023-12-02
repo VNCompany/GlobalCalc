@@ -6,7 +6,7 @@ public interface IApiClient
 {
     FacadeData GetData();
 
-    Dictionary<string, DateTime> GetImages();
+    List<RemoteImageFile> GetImages();
 
     Stream GetImage(string file);
 }

@@ -11,7 +11,7 @@ internal class ApiClientTest : IApiClient
 {
     public FacadeData GetData() => Models.Test.TestModels.FacadeData;
 
-    public Dictionary<string, DateTime> GetImages() => new(0);
+    public List<RemoteImageFile> GetImages() => new(0);
 
     public Stream GetImage(string file)
     {

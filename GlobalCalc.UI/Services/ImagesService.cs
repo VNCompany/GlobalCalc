@@ -18,10 +18,10 @@ internal class ImagesService
         
         foreach (var img in _services.Api.GetImages())
         {
-            FileInfo fi = new FileInfo(Path.Combine(AppService.DataPath, img.Key));
-            if (!fi.Exists || fi.LastWriteTime < img.Value)
+            FileInfo fi = new FileInfo(Path.Combine(AppService.DataPath, img.Name));
+            if (!fi.Exists || fi.LastWriteTime < img.LastWriteTime)
             {
-                using (Stream imageStream = _services.Api.GetImage(img.Key))
+                using (Stream imageStream = _services.Api.GetImage(img.Name))
                 {
                     using (FileStream fs = new FileStream(fi.FullName, FileMode.Create, FileAccess.Write))
                     {

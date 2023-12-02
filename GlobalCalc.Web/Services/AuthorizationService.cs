@@ -26,7 +26,7 @@ namespace GlobalCalc.Web.Services
             => cookies.TryGetValue("access_token", out string? accessToken)
                 && accessToken == _adminToken;
 
-        public void SetCookies(IResponseCookies cookies, string token)
+        private void SetCookies(IResponseCookies cookies, string token)
         {
             cookies.Append("access_token", token, new CookieOptions { Expires = DateTime.Now.AddDays(1) });
         }
