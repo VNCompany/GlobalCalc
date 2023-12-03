@@ -1,6 +1,4 @@
 ﻿using GlobalCalc.DataLayer;
-using Models = GlobalCalc.Models;
-using Entities = GlobalCalc.DataLayer.Entities;
 
 namespace GlobalCalc.Web.BL
 {
