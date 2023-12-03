@@ -13,10 +13,11 @@
 
   <ItemGroup>
     <Folder Include="Views\Shared\" />
+    <Folder Include="BL\" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Riok.Mapperly" Version="3.2.0" />
+    <PackageReference Include="Riok.Mapperly" Version="3.2.0"/>
   </ItemGroup>
 
 </Project>

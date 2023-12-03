@@ -2,7 +2,7 @@
 
 using GlobalCalc.Models;
 using GlobalCalc.DataLayer;
-using GlobalCalc.Web.Extensions;
+using GlobalCalc.Web.BL;
 
 namespace GlobalCalc.Web.Controllers;
 
@@ -23,16 +23,11 @@ public class ApiController : Controller
         var data = new FacadeData
         {
             WorkPrice = 450,
-            Screws = _db.Screws.GetAll().Select(s => s.ToModel()).ToArray(),
-            Millings = _db.Millings.GetAll().Select(m => m.ToModel()).ToArray(),
+            Screws = Array.Empty<Screw>(),
+            Millings = Array.Empty<Milling>()
         };
-        var profiles = from pp in _db.ProfilePositions.GetAll()
-                group pp by pp.Profile into profileGroup
-                select profileGroup.Key.ToModel(
-                    from pos in profileGroup
-                    select pos.Color.ToModel(pos.Price)
-                );
-        data.Profiles = profiles.ToArray();
+        var profilesBL = new ProfilesBL(_db);
+        data.Profiles = profilesBL.GetProfiles().ToArray();
 
         return data;
     }
@@ -43,4 +38,7 @@ public class ApiController : Controller
         var dirInfo = new DirectoryInfo("wwwroot/content/");
         return dirInfo.GetFiles().Select(f => new RemoteImageFile(f.Name, f.LastWriteTime));
     }
+
+    [HttpGet("test")]
+    public object Test() => new BL.ProfilesBL(_db).GetProfiles();
 }
