@@ -9,12 +9,9 @@ namespace GlobalCalc.UI.Test;
 
 internal class ApiClientTest : IApiClient
 {
-    public FacadeData GetData() => Models.Test.TestModels.FacadeData;
+    public FacadeData GetData() => new Models.Test.TestFacadeData();
 
     public List<RemoteImageFile> GetImages() => new(0);
 
-    public Stream GetImage(string file)
-    {
-        throw new NotImplementedException();
-    }
+    public Stream GetImage(string file) => throw new NotImplementedException();
 }

@@ -6,6 +6,7 @@
         <Nullable>enable</Nullable>
         <UseWPF>true</UseWPF>
         <ApplicationIcon>Resources\GlobalCalc.ico</ApplicationIcon>
+        <Configurations>Debug;Release;Stage</Configurations>
     </PropertyGroup>
 
     <ItemGroup>
@@ -23,6 +24,18 @@
       <Resource Include="Resources\GlobalCalc16.ico" />
       <None Remove="Resources\GlobalCalc.ico" />
       <Resource Include="Resources\GlobalCalc.ico" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Update="config.stage.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+      <None Update="config.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+      <None Update="config.debug.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
     </ItemGroup>
 
 </Project>

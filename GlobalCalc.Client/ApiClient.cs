@@ -29,7 +29,7 @@ public class ApiClient : IApiClient
     private async Task<T?> GetApiDataAsync<T>(string endpoint)
     {
         using HttpClient client = new HttpClient();
-        return await client.GetFromJsonAsync<T>(new Uri(_host, $"api/{endpoint}")
+        return await client.GetFromJsonAsync<T>(new Uri(_host, $"{endpoint}")
             , new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
     }
 }

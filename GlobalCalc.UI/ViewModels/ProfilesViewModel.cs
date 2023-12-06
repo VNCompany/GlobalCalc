@@ -1,8 +1,9 @@
-﻿using System;
+﻿using System.Linq;
 using System.Collections.Generic;
 
 using GlobalCalc.UI.Infrastructure;
 using GlobalCalc.Models;
+
 
 namespace GlobalCalc.UI.ViewModels;
 
@@ -36,7 +37,7 @@ internal class ProfilesViewModel : ViewModelBase
 
     public ProfilesViewModel()
     {
-        _profiles = GlobalCalc.Models.Test.TestModels.FacadeData.Profiles;
+        _profiles = Enumerable.Empty<Profile>();
     }
 
     public ProfilesViewModel(IEnumerable<Profile> profiles)
