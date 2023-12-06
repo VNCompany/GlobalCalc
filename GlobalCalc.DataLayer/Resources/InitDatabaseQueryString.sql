@@ -32,3 +32,5 @@ CREATE TABLE `Millings` (
 	PRIMARY KEY (`Type`, `ProfileType`)
 );
 CREATE TABLE `Prices` (`Id` INTEGER NOT NULL PRIMARY KEY, `Price` DECIMAL(8, 2) NOT NULL);
+
+INSERT INTO `Prices` (`Id`, `Price`) VALUES (1, 450);

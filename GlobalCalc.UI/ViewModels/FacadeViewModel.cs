@@ -171,6 +171,7 @@ class FacadeViewModel : ViewModelBase, ICloneable
         }
     }
 
+    // Milling holes
     private int _holesCount;
     public int HolesCount
     {
@@ -224,10 +225,42 @@ class FacadeViewModel : ViewModelBase, ICloneable
 
             SelectedProfile = profilesVM.SelectedProfile;
         });
-    
+
     #endregion
 
     #region Methods
+
+    public FacadeViewModel Clone()
+    {
+        return new FacadeViewModel
+        {
+            AllMillings = AllMillings,
+            _profiles = _profiles,
+            _selectedProfile = _selectedProfile,
+            _selectedProfileName = _selectedProfileName,
+            _profileColors = _profileColors,
+            _selectedColor = _selectedColor,
+            _screws = _screws,
+            _selectedScrew = _selectedScrew,
+            _width = _width, 
+            _height = _height,
+            _millings = _millings,
+            _selectedMilling = _selectedMilling,
+            _holesCount = _holesCount,
+            _addSeal = _addSeal,
+            _count = _count
+        };
+    }
+
+    object ICloneable.Clone() => Clone();
+
+    protected override void OnPropertyChanged([CallerMemberName] string? propertyName = null)
+    {
+        if (!_hasChanges)
+            _hasChanges = true;
+
+        base.OnPropertyChanged(propertyName);
+    }
 
     private bool Apply_CanExecute(object? _)
     {
@@ -242,24 +275,6 @@ class FacadeViewModel : ViewModelBase, ICloneable
     {
         WindowContext!.DialogResult = true;
         WindowContext!.Close();
-    }
-
-    public object Clone()
-    {
-        return SimpleMapper.CloneObject(this
-            , MapperField.Property(nameof(CalculatorResult))
-            , nameof(_apply)
-            , nameof(_hasChanges)
-            , nameof(PropertyChanged)
-        );
-    }
-
-    protected override void OnPropertyChanged([CallerMemberName] string? propertyName = null)
-    {
-        if (!_hasChanges)
-            _hasChanges = true;
-
-        base.OnPropertyChanged(propertyName);
     }
 
     #endregion

@@ -7,12 +7,15 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\GlobalCalc.DataLayer\GlobalCalc.DataLayer.csproj" />
-    <ProjectReference Include="..\GlobalCalc.Models\GlobalCalc.Models.csproj" />
+    <Compile Remove="Views\Shared\**" />
+    <Content Remove="Views\Shared\**" />
+    <EmbeddedResource Remove="Views\Shared\**" />
+    <None Remove="Views\Shared\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Views\Shared\" />
+    <ProjectReference Include="..\GlobalCalc.DataLayer\GlobalCalc.DataLayer.csproj" />
+    <ProjectReference Include="..\GlobalCalc.Models\GlobalCalc.Models.csproj" />
   </ItemGroup>
 
   <ItemGroup>

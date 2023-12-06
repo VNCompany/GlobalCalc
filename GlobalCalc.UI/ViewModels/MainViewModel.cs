@@ -81,7 +81,7 @@ class MainViewModel : ViewModelBase
         {
             var facadeVM = (FacadeViewModel)param!;
             int selectedIndex = Facades.IndexOf(facadeVM);
-            var clone = (FacadeViewModel)facadeVM.Clone()!;
+            var clone = facadeVM.Clone();
             if (ViewsProvider.ShowWindowDialog(clone) != true)
                 return;
 
@@ -95,7 +95,7 @@ class MainViewModel : ViewModelBase
     public RelayCommand OpenFillingTable =>
         _openFillingTable ??= new RelayCommand(_ =>
         {
-            var tablePath = ".\\Data\\table.jpg";
+            var tablePath = ".\\data\\table.jpg";
             if (File.Exists(tablePath))
                 Process.Start(new ProcessStartInfo { FileName = tablePath, UseShellExecute = true });
         });

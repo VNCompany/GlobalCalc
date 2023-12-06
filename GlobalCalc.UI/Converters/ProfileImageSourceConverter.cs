@@ -15,7 +15,7 @@ class ProfileImageSourceConverter : IValueConverter
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
         var profile = (Profile)value;
-        return ServicesManager.Services.Images.GetImageSource(profile!.Id, (bool)parameter!);
+        return ServicesManager.Services.Images.GetImageSource(profile!.Id, parameter as string == "True");
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

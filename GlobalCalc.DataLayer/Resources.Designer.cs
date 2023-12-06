@@ -81,9 +81,9 @@ namespace GlobalCalc.DataLayer {
         ///);
         ///CREAT [остаток строки не уместился]&quot;;.
         /// </summary>
-        internal static string InitDbTables {
+        internal static string InitDatabaseQueryString {
             get {
-                return ResourceManager.GetString("InitDbTables", resourceCulture);
+                return ResourceManager.GetString("InitDatabaseQueryString", resourceCulture);
             }
         }
     }

@@ -1,5 +1,7 @@
 using System.IO;
 
+using GlobalCalc.UI.Helpers;
+
 namespace GlobalCalc.UI.Services;
 
 internal class ImagesService
@@ -21,18 +23,8 @@ internal class ImagesService
             FileInfo fi = new FileInfo(Path.Combine(AppService.DataPath, img.Name));
             if (!fi.Exists || fi.LastWriteTime < img.LastWriteTime)
             {
-                using (Stream imageStream = _services.Api.GetImage(img.Name))
-                {
-                    using (FileStream fs = new FileStream(fi.FullName, FileMode.Create, FileAccess.Write))
-                    {
-                        byte[] buf = new byte[1024];
-                        int count;
-                        while ((count = imageStream.Read(buf, 0, buf.Length)) != 0)
-                            fs.Write(buf, 0, count);
-                        
-                        fs.Flush();
-                    }
-                }
+                using Stream loadStream = _services.Api.GetImage(img.Name);
+                ImagesHelper.LoadImageFromStream(loadStream, fi.FullName);
             }
         }
     }

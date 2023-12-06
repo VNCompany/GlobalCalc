@@ -35,6 +35,11 @@ public class DataContext : IDisposable
     public MillingsRepository Millings =>
         _millings ??= new MillingsRepository(this);
 
+    // PricesRepository
+    public PricesRepository? _prices;
+    public PricesRepository Prices =>
+        _prices ??= new PricesRepository(this);
+
     public DataContext()
     {
         bool needInit = !File.Exists("db.sqlite");
@@ -52,7 +57,7 @@ public class DataContext : IDisposable
     {
         using (var cmd = _conn.CreateCommand())
         {
-            cmd.CommandText = Resources.InitDbTables;
+            cmd.CommandText = Resources.InitDatabaseQueryString;
             cmd.ExecuteNonQuery();
         }
     }

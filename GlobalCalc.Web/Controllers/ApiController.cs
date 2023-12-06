@@ -22,9 +22,9 @@ public class ApiController : Controller
     {
         var data = new FacadeData
         {
-            WorkPrice = 450,
-            Screws = Array.Empty<Screw>(),
-            Millings = Array.Empty<Milling>()
+            WorkPrice = _db.Prices.GetPrice(DataLayer.Types.PriceType.WorkPrice),
+            Screws = _db.Screws.GetAll().Select(_ => new ScrewMapper().ToModel(_)).ToArray(),
+            Millings = _db.Millings.GetAll().Select(_ => new MillingMapper().ToModel(_)).ToArray(),
         };
         var profilesBL = new ProfilesBL(_db);
         data.Profiles = profilesBL.GetProfiles().ToArray();
@@ -38,7 +38,4 @@ public class ApiController : Controller
         var dirInfo = new DirectoryInfo("wwwroot/content/");
         return dirInfo.GetFiles().Select(f => new RemoteImageFile(f.Name, f.LastWriteTime));
     }
-
-    [HttpGet("test")]
-    public object Test() => new BL.ProfilesBL(_db).GetProfiles();
 }
