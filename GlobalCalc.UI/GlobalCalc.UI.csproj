@@ -7,6 +7,7 @@
         <UseWPF>true</UseWPF>
         <ApplicationIcon>Resources\GlobalCalc.ico</ApplicationIcon>
         <Configurations>Debug;Release;Stage</Configurations>
+        <Version>1.0.0</Version>
     </PropertyGroup>
 
     <ItemGroup>

@@ -17,29 +17,39 @@ internal class AppService : IDisposable
     {
         if (!Directory.Exists(DataPath)) Directory.CreateDirectory(DataPath);
     }
-    
+
     #endregion
-    
-    public FacadeData Data { get; }
-    
-    public string? Status { get; }
+
+    private readonly ServicesManager _services;
+
+    public FacadeData Data { get; private set; } = null!;
 
     public AppService(ServicesManager services)
     {
-        services.Images.Initialize();
-        
-        FacadeData? fd;
-        if ((fd = services.Api.GetData()) == null)
+        _services = services;
+        _services.Images.Initialize();
+    }
+
+    public string? Run()
+    {
+        FacadeData? fd = null;
+
+        try
+        {
+            fd = _services.Api.GetData();
+        }
+        catch (Exception)
         {
             if ((fd = SetFacadeDataFromLocalFile()) == null)
                 throw new Exception("Не удалось соединиться с сервером.");
 
-            Status = "Не удалось соединиться с сервером. Данные могут быть неактуальны.";
+            Data = fd;
+            return "Не удалось соединиться с сервером. Данные могут быть неактуальны.";
         }
 
         Data = fd;
+        return null;
     }
-
 
     public void Dispose()
     {

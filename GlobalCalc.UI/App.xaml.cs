@@ -14,25 +14,34 @@ namespace GlobalCalc.UI
     /// </summary>
     public partial class App : Application
     {
+        private readonly string? facadeDataLoadStatus;
+
         public App()
         {
-            DispatcherUnhandledException += OnDispatcherUnhandledException;
-
-            if (ServicesManager.Services.App.Status != null)
-                MessageBox.Show(ServicesManager.Services.App.Status, "Внимание!");
+            try
+            {
+                facadeDataLoadStatus = ServicesManager.Services.App.Run();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Фатальная ошибка!");
+                Shutdown(-1);
+            }
         }
 
-        private void OnDispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
+        protected override void OnStartup(StartupEventArgs e)
         {
-            MessageBox.Show(e.Exception.Message, "Фатальная ошибка");
-            Shutdown(-1);
+            base.OnStartup(e);
+
+            if (facadeDataLoadStatus != null)
+                MessageBox.Show(facadeDataLoadStatus, "Внимание!");
         }
 
         protected override void OnExit(ExitEventArgs e)
         {
             if (e.ApplicationExitCode == 0)
                 ServicesManager.Services.Dispose();
-            
+
             base.OnExit(e);
         }
     }
