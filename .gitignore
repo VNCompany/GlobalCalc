@@ -6,8 +6,5 @@
 [Oo]bj/
 [Pp]ackages/
 
-/GlobalCalc.Web/wwwroot/*
-
 *.user
-*.sqlite
 *.suo

@@ -12,7 +12,6 @@
 
     <ItemGroup>
       <ProjectReference Include="..\GlobalCalc.Client\GlobalCalc.Client.csproj" />
-      <ProjectReference Include="..\GlobalCalc.Models\GlobalCalc.Models.csproj" />
       <ProjectReference Include="..\GlobalCalc.Operations\GlobalCalc.Operations.csproj" />
     </ItemGroup>
 
