@@ -1,4 +1,4 @@
-using GlobalCalc.Models;
+using GlobalCalc.Shared;
 
 namespace GlobalCalc.Client;
 

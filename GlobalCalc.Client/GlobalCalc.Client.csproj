@@ -6,4 +6,8 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\GlobalCalc.Shared\GlobalCalc.Shared.csproj" />
+    </ItemGroup>
+
 </Project>

@@ -2,8 +2,7 @@ using System;
 using System.IO;
 using System.Text.Json;
 
-using GlobalCalc.Models;
-using GlobalCalc.Client;
+using GlobalCalc.Shared;
 
 namespace GlobalCalc.UI.Services;
 

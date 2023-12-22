@@ -4,7 +4,7 @@ using System.Windows.Data;
 
 using System.IO;
 
-using GlobalCalc.Models;
+using GlobalCalc.Shared;
 
 namespace GlobalCalc.UI.Converters;
 

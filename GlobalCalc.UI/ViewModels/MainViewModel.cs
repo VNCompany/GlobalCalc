@@ -2,7 +2,7 @@ using System.IO;
 using System.Diagnostics;
 using System.Collections.ObjectModel;
 
-using GlobalCalc.Models;
+using GlobalCalc.Shared;
 using GlobalCalc.Operations;
 using GlobalCalc.UI.Infrastructure;
 

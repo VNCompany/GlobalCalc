@@ -1,0 +1,3 @@
+[submodule "GlobalCalc.Shared"]
+	path = GlobalCalc.Shared
+	url = git@github.com:VNCompany/GlobalCalc.Shared

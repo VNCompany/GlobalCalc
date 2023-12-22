@@ -1,7 +1,7 @@
 ﻿using System.Net.Http.Json;
 using System.Text.Json;
 
-using GlobalCalc.Models;
+using GlobalCalc.Shared;
 
 namespace GlobalCalc.Client;
 

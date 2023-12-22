@@ -3,7 +3,7 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 
-using GlobalCalc.Models;
+using GlobalCalc.Shared;
 using GlobalCalc.Operations;
 using GlobalCalc.UI.Infrastructure;
 

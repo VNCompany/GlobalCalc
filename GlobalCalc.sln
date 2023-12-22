@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GlobalCalc.UI", "GlobalCalc
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GlobalCalc.Tests", "GlobalCalc.Tests\GlobalCalc.Tests.csproj", "{94A8E5E5-5503-447E-ADEA-DD073E32AC4A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GlobalCalc.Shared", "GlobalCalc.Shared\GlobalCalc.Shared.csproj", "{E884C06B-662E-484C-BDD2-3049CC754C66}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -42,6 +44,12 @@ Global
 		{94A8E5E5-5503-447E-ADEA-DD073E32AC4A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{94A8E5E5-5503-447E-ADEA-DD073E32AC4A}.Stage|Any CPU.ActiveCfg = Debug|Any CPU
 		{94A8E5E5-5503-447E-ADEA-DD073E32AC4A}.Stage|Any CPU.Build.0 = Debug|Any CPU
+		{E884C06B-662E-484C-BDD2-3049CC754C66}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E884C06B-662E-484C-BDD2-3049CC754C66}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E884C06B-662E-484C-BDD2-3049CC754C66}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E884C06B-662E-484C-BDD2-3049CC754C66}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E884C06B-662E-484C-BDD2-3049CC754C66}.Stage|Any CPU.ActiveCfg = Debug|Any CPU
+		{E884C06B-662E-484C-BDD2-3049CC754C66}.Stage|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -13,6 +13,7 @@
     <ItemGroup>
       <ProjectReference Include="..\GlobalCalc.Client\GlobalCalc.Client.csproj" />
       <ProjectReference Include="..\GlobalCalc.Operations\GlobalCalc.Operations.csproj" />
+      <ProjectReference Include="..\GlobalCalc.Shared\GlobalCalc.Shared.csproj" />
     </ItemGroup>
 
     <ItemGroup>

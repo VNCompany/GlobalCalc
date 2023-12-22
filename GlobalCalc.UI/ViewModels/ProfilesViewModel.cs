@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 
 using GlobalCalc.UI.Infrastructure;
-using GlobalCalc.Models;
+using GlobalCalc.Shared;
 
 
 namespace GlobalCalc.UI.ViewModels;
