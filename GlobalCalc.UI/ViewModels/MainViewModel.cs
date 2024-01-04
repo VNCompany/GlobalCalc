@@ -1,9 +1,13 @@
+using System;
 using System.IO;
+using System.Linq;
 using System.Diagnostics;
 using System.Collections.ObjectModel;
+using Microsoft.Win32;
 
 using GlobalCalc.Shared;
 using GlobalCalc.Operations;
+using GlobalCalc.UI.Helpers;
 using GlobalCalc.UI.Infrastructure;
 
 namespace GlobalCalc.UI.ViewModels;
@@ -46,13 +50,14 @@ class MainViewModel : ViewModelBase
     public RelayCommand AddFacade =>
         _addFacade ??= new RelayCommand(_ =>
         {
-            var facadeVM = new FacadeViewModel
+            FacadeViewModel facadeVM = new()
             {
                 Profiles = _data.Profiles,
                 AllMillings = _data.Millings,
-                Screws = _data.Screws,
+                SelectedScrew = _data.Screws[0],
+                ApplyButtonText = "Добавить"
             };
-            if (ViewsProvider.ShowWindowDialog(facadeVM) != true) 
+            if (ViewsProvider.ShowWindowDialog("Facade", facadeVM) != true) 
                 return;
 
             CalculateFacade(facadeVM);
@@ -79,10 +84,11 @@ class MainViewModel : ViewModelBase
     public RelayCommand EditFacade =>
         _editFacade ??= new RelayCommand(param =>
         {
-            var facadeVM = (FacadeViewModel)param!;
+            FacadeViewModel facadeVM = (FacadeViewModel)param!;
             int selectedIndex = Facades.IndexOf(facadeVM);
-            var clone = facadeVM.Clone();
-            if (ViewsProvider.ShowWindowDialog(clone) != true)
+            FacadeViewModel clone = facadeVM.Clone();
+            clone.ApplyButtonText = "Изменить";
+            if (ViewsProvider.ShowWindowDialog("Facade", clone) != true)
                 return;
 
             CalculateFacade(clone);
@@ -95,10 +101,36 @@ class MainViewModel : ViewModelBase
     public RelayCommand OpenFillingTable =>
         _openFillingTable ??= new RelayCommand(_ =>
         {
-            var tablePath = ".\\data\\table.jpg";
+            const string tablePath = ".\\data\\table.jpg";
             if (File.Exists(tablePath))
                 Process.Start(new ProcessStartInfo { FileName = tablePath, UseShellExecute = true });
         });
+
+    private RelayCommand? _save;
+    public RelayCommand Save =>
+        _save ??= new RelayCommand(Save_Execute, Save_CanExecute);
+
+    private bool Save_CanExecute(object? _) => Facades.Any();
+
+    private void Save_Execute(object? _)
+    {
+        string report = ReportsHelper.GenerateReport(this);
+        SaveFileDialog sfd = new SaveFileDialog();
+        sfd.OverwritePrompt = true;
+        sfd.Filter = "HTML Document|*.html";
+        sfd.DefaultExt = "html";
+        sfd.FileName = string.Concat("GlobalCalcReport_", DateTime.Now.ToString("dd_MM_yyyy_HH_mm_ss"));
+        if (sfd.ShowDialog() == true)
+        {
+            Stream fileStream = sfd.OpenFile();
+            using (StreamWriter sw = new StreamWriter(fileStream))
+            {
+                sw.Write(report);
+                sw.Flush();
+            }
+            fileStream.Close();
+        }
+    }
 
     #endregion
     
@@ -115,7 +147,7 @@ class MainViewModel : ViewModelBase
             workPrice: _data.WorkPrice
             , mmSize: new Size(facadeVM.Width, facadeVM.Height)
             , profilePrice: facadeVM.SelectedColor!.Price
-            , sealPrice: facadeVM.SelectedProfile!.SealPrice
+            , sealPrice: facadeVM.AddSeal ? facadeVM.SelectedProfile!.SealPrice : 0
             , cornerPrice: facadeVM.SelectedProfile!.CornerPrice
             , screwPrice: facadeVM.SelectedScrew!.Price
             , millingPrice: facadeVM.SelectedMilling!.Price
@@ -125,16 +157,8 @@ class MainViewModel : ViewModelBase
 
     private void RecalculateCounters()
     {
-        _totalPrice = 0;
-        _totalCount = 0;
-        foreach (var facade in Facades)
-        {
-            _totalPrice += facade.CalculatorResult!.TotalPrice * facade.Count;
-            _totalCount += facade.Count;
-        }
-        
-        OnPropertyChanged(nameof(TotalPrice));
-        OnPropertyChanged(nameof(TotalCount));
+        TotalPrice = Facades.Sum(f => f.CalculatorResult!.TotalPrice * f.Count);
+        TotalCount = Facades.Sum(f => f.Count);
     }
 
     #endregion

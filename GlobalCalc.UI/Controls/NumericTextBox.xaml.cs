@@ -1,8 +1,8 @@
-using System;
 using System.Linq;
 using System.Windows;
-using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Input;
+using System.Windows.Controls;
 
 namespace GlobalCalc.UI.Controls;
 
@@ -21,7 +21,7 @@ public partial class NumericTextBox : UserControl
 
     private void TextBoxOnPreviewTextInput(object sender, TextCompositionEventArgs e)
     {
-        if (e.Text.Any(ch => ch is < '0' or > '9' && ch != '-')) e.Handled = true;
+        if (e.Text.Any(ch => (ch is < '0' or > '9') && ch != '-')) e.Handled = true;
     }
 
     private void TextBoxOnLostFocus(object sender, RoutedEventArgs e)
@@ -59,18 +59,20 @@ public partial class NumericTextBox : UserControl
     
     private static object CoerceValueCallback(DependencyObject d, object baseValue)
     {
-        var control = (NumericTextBox)d;
-        var value = (int)baseValue;
-        var newValue = value;
+        NumericTextBox control = (NumericTextBox)d;
+        int value = (int)baseValue;
+        int newValue = value;
         newValue = newValue < control.MinValue ? control.MinValue : newValue;
         newValue = newValue > control.MaxValue ? control.MaxValue : newValue;
-        var binding = control.GetBindingExpression(ValueProperty);
+        BindingExpression binding = control.GetBindingExpression(ValueProperty);
         if (newValue != value && binding != null)
         {
-            var bindingSource = binding.ResolvedSource;
-            bindingSource.GetType()
-                .GetProperty(binding.ResolvedSourcePropertyName)?
-                .SetValue(bindingSource, newValue);
+            object bindingSource = binding.ResolvedSource;
+            if (bindingSource != null)
+				bindingSource
+                    .GetType()
+                    .GetProperty(binding.ResolvedSourcePropertyName)?
+                    .SetValue(bindingSource, newValue);
         }
 
         return newValue;

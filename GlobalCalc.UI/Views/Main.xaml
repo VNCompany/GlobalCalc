@@ -31,6 +31,14 @@
         </ContextMenu>
 
         <conv:ProfileImageSourceConverter x:Key="ProfileImageSourceConverter"></conv:ProfileImageSourceConverter>
+        <conv:DecimalConverter x:Key="DecimalConverter"></conv:DecimalConverter>
+
+        <Style TargetType="MenuItem">
+            <Setter Property="Margin" Value="5, 2" />
+        </Style>
+        <Style TargetType="StatusBarItem">
+            <Setter Property="Margin" Value="5, 2" />
+        </Style>
     </Window.Resources>
 
     <Grid>
@@ -40,14 +48,17 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <WrapPanel>
-            <Button Margin="10" Padding="15,5" FontSize="14" Command="{Binding AddFacade}">
-                Добавить фасад
-            </Button>
-            <Button Margin="10" Padding="15,5" FontSize="14" Command="{Binding OpenFillingTable}">
-                Расчёт наполнения (стекла)
-            </Button>
-        </WrapPanel>
+        <ToolBarTray Grid.Row="0">
+            <ToolBar TextBlock.FontSize="13">
+                <Button Command="{Binding Save}" Content="Сохранить" />
+                <Separator />
+                <Button Command="{Binding OpenFillingTable}" Content="Расчёт наполнения (стекла)" />
+            </ToolBar>
+
+            <ToolBar TextBlock.FontSize="13" Band="1">
+                <Button Command="{Binding AddFacade}" Content="Добавить фасад" />
+            </ToolBar>
+        </ToolBarTray>
 
         <ListBox Grid.Row="1" HorizontalContentAlignment="Stretch" ItemsSource="{Binding Facades}">
             <ListBox.ItemTemplate>
@@ -91,12 +102,12 @@
                                    VerticalAlignment="Center"
                                    FontSize="20" FontWeight="Normal"
                                    Margin="15,0"
-                                   Text="{Binding CalculatorResult.TotalPrice}" />
+                                   Text="{Binding CalculatorResult.TotalPrice, Converter={StaticResource DecimalConverter}}" />
 
                         <controls:NumericTextBox Grid.Column="3"
                                                  Width="80" Height="30"
                                                  FontSize="19"
-                                                 MinValue="0" MaxValue="1000"
+                                                 MinValue="1" MaxValue="1000"
                                                  Value="{Binding Count, Mode=TwoWay}">
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="ValueChanged">
@@ -120,18 +131,19 @@
             </ListBox.ItemTemplate>
         </ListBox>
 
-        <WrapPanel Grid.Row="2"
-                   HorizontalAlignment="Right" VerticalAlignment="Center"
-                   Margin="15"
-                   TextBlock.FontSize="20">
-            <TextBlock>
-                <Run Text="Кол-во фасадов: " />
-                <Run Text="{Binding TotalCount}" FontWeight="SemiBold" />
-            </TextBlock>
-            <TextBlock Margin="30,0,10,0">
-                <Run Text="Общая цена: " TextDecorations="Underline" />
-                <Run Text="{Binding TotalPrice}" FontWeight="SemiBold" />
-            </TextBlock>
-        </WrapPanel>
+        <StatusBar Grid.Row="2" TextBlock.FontSize="15">
+            <StatusBarItem>
+                <TextBlock>
+                    <Run Text="Количество: " />
+                    <Run Text="{Binding TotalCount}" FontWeight="SemiBold" />
+                </TextBlock>
+            </StatusBarItem>
+            <StatusBarItem>
+                <TextBlock>
+                    <Run Text="Цена: " />
+                    <Run Text="{Binding TotalPrice, Converter={StaticResource DecimalConverter}}" FontWeight="SemiBold" />
+                </TextBlock>
+            </StatusBarItem>
+        </StatusBar>
     </Grid>
 </Window>

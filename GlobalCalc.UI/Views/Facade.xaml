@@ -62,28 +62,19 @@
                           SelectedItem="{Binding SelectedColor}"/>
             </StackPanel>
         </WrapPanel>
-        
+
         <WrapPanel Style="{StaticResource RowStyle}">
-            <StackPanel Style="{StaticResource InputBlockStyle}">
-                <TextBlock Text="Ширина (мм):" />
-                <controls:NumericTextBox Margin="0,5,0,0"
-                                         MinValue="1" MaxValue="100000"
-                                         Value="{Binding Width, Mode=TwoWay}"/>
-            </StackPanel>
             <StackPanel Style="{StaticResource InputBlockStyle}">
                 <TextBlock Text="Высота (мм):" />
                 <controls:NumericTextBox Margin="0,5,0,0"
                                          MinValue="1" MaxValue="100000"
                                          Value="{Binding Height, Mode=TwoWay}"/>
             </StackPanel>
-        </WrapPanel>
-
-        <WrapPanel Style="{StaticResource RowStyle}">
             <StackPanel Style="{StaticResource InputBlockStyle}">
-                <TextBlock Text="Винт:" />
-                <ComboBox Width="150"
-                          ItemsSource="{Binding Screws}"
-                          SelectedItem="{Binding SelectedScrew}"/>
+                <TextBlock Text="Ширина (мм):" />
+                <controls:NumericTextBox Margin="0,5,0,0"
+                                         MinValue="1" MaxValue="100000"
+                                         Value="{Binding Width, Mode=TwoWay}"/>
             </StackPanel>
         </WrapPanel>
 
@@ -112,7 +103,7 @@
 
         <WrapPanel HorizontalAlignment="Right">
             <Button Style="{StaticResource ButtonStyle}"
-                    Content="{Binding ApplyBtnText}"
+                    Content="{Binding ApplyButtonText, TargetNullValue=Добавить}"
                     Command="{Binding Apply}"/>
             <Button Style="{StaticResource ButtonStyle}" 
                     Content="Отмена"

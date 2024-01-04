@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>GlobalCalc - Report</title>
+
+    <style>
+        * {{
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-size: 1.0em;
+            box-sizing: border-box;
+        }}
+
+        main {{
+            max-width: 900px;
+            margin: 0 auto;
+        }}
+
+        #facades-list {{
+            width: 100%;
+            border-spacing: 10px;
+        }}
+
+        #facades-list tr {{
+            margin: 15px 0;
+            box-shadow: 1px 1px 5px dimgray;
+        }}
+
+        #facades-list th {{
+            padding: 10px 20px;
+        }}
+
+        #facades-list td {{
+            text-align: center;
+            padding: 5px 8px;
+        }}
+        #facades-list td:nth-child(3) {{
+            padding-left: 10px;
+            text-align: left;
+        }}
+
+        #facades-list td > p {{
+            margin: 10px 0;
+        }}
+
+        .text-normal {{ color: black; }}
+        .text-success {{ color: green; }}
+        .text-danger {{ color: red; }}
+
+        .facade-name, .facade-price {{ font-weight: bold; font-size: 1.1em; }}
+        .facade-description {{ color: dimgray; }}
+        .facade-count {{ font-size: 1.1em; }}
+
+        .total-info {{
+            text-align: right;
+            font-size: 1.2em;
+        }}
+    </style>
+</head>
+<body>
+
+<main>
+    <table id="facades-list">
+        <tr>
+            <th></th>
+            <th></th>
+            <th>Информация о фасаде</th>
+            <th>Цена</th>
+            <th>Кол-во</th>
+            <th>Итого</th>
+        </tr>
+
+        {0}
+
+    </table>
+
+    <hr>
+
+    <div class="total-info">
+        <span class="facade-description">Количество: <strong class="text-normal">{1}</strong></span>
+        &nbsp;
+        <span class="facade-description">Цена: <strong class="text-normal">{2:f2}</strong></span>
+    </div>
+</main>
+
+</body>
+</html>

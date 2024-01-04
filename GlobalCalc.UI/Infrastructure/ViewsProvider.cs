@@ -1,33 +1,50 @@
 using System;
 using System.Windows;
+using System.Reflection;
+using System.Diagnostics;
 using System.Collections.Generic;
 
 using GlobalCalc.UI.ViewModels;
+using System.Linq;
 
 namespace GlobalCalc.UI.Infrastructure;
 
 internal static class ViewsProvider
 {
-    private static Dictionary<Type, Type> _assoc = new()
-    {
-        { typeof(MainViewModel), typeof(Views.Main) },
-        { typeof(FacadeViewModel), typeof(Views.Facade) },
-        { typeof(ProfilesViewModel), typeof(Views.Profiles) }
-    };
+    private static Dictionary<string, Type> viewTypes = Assembly
+        .GetExecutingAssembly()
+        .GetTypes()
+        .Where(t => t.FullName?.StartsWith("GlobalCalc.UI.Views.") ?? false)
+        .ToDictionary(t => t.FullName![20..]);
 
-    private static Window GetWindow(ViewModelBase viewModel)
+    public static void ShowWindow(string name, ViewModelBase context)
     {
-        var window = (Window)Activator.CreateInstance(_assoc[viewModel.GetType()])!;
-        window.DataContext = viewModel;
-        viewModel.WindowContext = new WindowContext(window);
-        return window;
+        Window? window = GetWindow(name, context);
+        if (window != null) window.Show(); else InvalidView(name);
     }
 
-    public static void ShowWindow(ViewModelBase viewModel)
+    public static bool? ShowWindowDialog(string name, ViewModelBase context)
     {
-        GetWindow(viewModel).Show();
+        Window? window = GetWindow(name, context);
+        if (window != null)
+            return window.ShowDialog();
+
+        InvalidView(name);
+        return null;
     }
 
-    public static bool? ShowWindowDialog(ViewModelBase viewModel) =>
-        GetWindow(viewModel).ShowDialog();
+    private static Window? GetWindow(string name, ViewModelBase context)
+    {
+        if (viewTypes.TryGetValue(name, out Type? value))
+        {
+            var window = (Window)Activator.CreateInstance(value)!;
+            window.DataContext = context;
+            context.WindowContext = new WindowContext(window);
+            return window;
+        }
+
+        return null;
+    }
+
+    private static void InvalidView(string name) => Trace.WriteLine($"View `{name}` doesn't exists");
 }

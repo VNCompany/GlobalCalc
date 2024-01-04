@@ -3,16 +3,11 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:conv="clr-namespace:GlobalCalc.UI.Controls.Converters"
              mc:Ignorable="d"
              d:DesignHeight="25" d:DesignWidth="100"
              Height="25"
              FontSize="16"
              Name="numericTextBoxWindow">
-    <UserControl.Resources>
-        <conv:Int32ToStringConverter x:Key="Int32ToStringConverter"></conv:Int32ToStringConverter>
-    </UserControl.Resources>
-    
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />

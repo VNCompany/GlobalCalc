@@ -19,20 +19,11 @@ class FacadeViewModel : ViewModelBase, ICloneable
     public CalculatorResult? CalculatorResult { get; set; }
     public string? SizeString
     => CalculatorResult != null
-        ? $"{Width} x {Height} мм ({CalculatorResult.ProfileSize.Width} x {CalculatorResult.ProfileSize.Height} м)"
+        ? $"{Height} x {Width} мм ({CalculatorResult.ProfileSize.Height} x {CalculatorResult.ProfileSize.Width} м)"
         : null;
 
     // ApplyBtnText
-    private string? _applyBtnText = "Добавить";
-    public string? ApplyBtnText
-    {
-        get => _applyBtnText;
-        set
-        {
-            _applyBtnText = value;
-            OnPropertyChanged();
-        }
-    }
+    public string? ApplyButtonText { get; set; }
 
     // Profile
     private IEnumerable<Profile> _profiles = Enumerable.Empty<Profile>();
@@ -99,18 +90,6 @@ class FacadeViewModel : ViewModelBase, ICloneable
     }
     
     // Screw
-    private IEnumerable<Screw> _screws = Enumerable.Empty<Screw>();
-    public IEnumerable<Screw> Screws
-    {
-        get => _screws;
-        set
-        {
-            _screws = value;
-            OnPropertyChanged();
-
-            SelectedScrew = _screws.FirstOrDefault();
-        }
-    }
 
     private Screw? _selectedScrew;
     public Screw? SelectedScrew
@@ -220,7 +199,7 @@ class FacadeViewModel : ViewModelBase, ICloneable
         _openProfileSelector ??= new RelayCommand(_ =>
         {
             var profilesVM = new ProfilesViewModel(Profiles);
-            if (ViewsProvider.ShowWindowDialog(profilesVM) != true)
+            if (ViewsProvider.ShowWindowDialog("Profiles", profilesVM) != true)
                 return;
 
             SelectedProfile = profilesVM.SelectedProfile;
@@ -240,7 +219,6 @@ class FacadeViewModel : ViewModelBase, ICloneable
             _selectedProfileName = _selectedProfileName,
             _profileColors = _profileColors,
             _selectedColor = _selectedColor,
-            _screws = _screws,
             _selectedScrew = _selectedScrew,
             _width = _width, 
             _height = _height,
